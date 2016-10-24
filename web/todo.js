@@ -25,8 +25,19 @@ angular.module('todoApp', [])
                 var oldTodos = todoList.todos;
                 todoList.todos = [];
                 angular.forEach(oldTodos, function (todo) {
-                    if (!todo.done)
+                    if (!todo.done){
                         todoList.todos.push(todo);
+                    }else{
+                        var todoReq  = {
+                            todo : todo.text,
+                            timestamp : Date.now()
+                        };
+                        $.post("todo", JSON.stringify(todoReq),
+                            function( data ) {
+                                console.log(data);
+                            }
+                        );
+                    }
                 });
             };
         });
