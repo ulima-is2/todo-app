@@ -1,26 +1,25 @@
-<!doctype html>
-<html>
+<html ng-app="todoApp">
     <head>
         <link rel="stylesheet" href="todo.css">
         <title>TODO App</title>
     </head>
     <body>
         <h2>Todo List</h2>
-        <div >
-            <span>2 de 10 restantes</span>
-            [ <a href="">archivados</a> ]
+        <div ng-controller="TodoListController as todoList">
+            <span>{{todoList.remaining()}} de {{todoList.todos.length}} restantes</span>
+            [ <a href="" ng-click="todoList.archive()">archivar</a> ]
             <ul class="unstyled">
-                <li >
+                <li ng-repeat="todo in todoList.todos">
                     <label class="checkbox">
-                        <input type="checkbox">
-                        <span class=""></span>
+                        <input type="checkbox" ng-model="todo.done">
+                        <span class="done-{{todo.done}}">{{todo.text}}</span>
                     </label>
                 </li>
             </ul>
-            <form>
-                <input type="text"   size="30"
-                       placeholder="add new todo here">
-                <input class="btn-primary" type="submit" value="add">
+            <form ng-submit="todoList.addTodo()">
+                <input type="text" ng-model="todoList.todoText"  size="30"
+                       placeholder="nuevo TODO">
+                <input class="btn-primary" type="submit" value="+">
             </form>
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
